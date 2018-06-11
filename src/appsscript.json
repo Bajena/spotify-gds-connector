@@ -1,0 +1,10 @@
+{
+  "dataStudio": {
+    "name": "Spotify Connector",
+    "company": "Jan Bajena",
+    "logoUrl": "https://developer.spotify.com/assets/branding-guidelines/icon1@2x.png",
+    "addonUrl": "https://github.com/Bajena/spotify-gds-connector",
+    "supportUrl": "https://github.com/Bajena/spotify-gds-connector",
+    "description": "This connector can be used to show stats about your last played tracks"
+  }
+}
