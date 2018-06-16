@@ -75,6 +75,17 @@ function getSchema() {
   };
 }
 
+function fetchPlays(startDate, endDate) {
+  var headers = {
+    Authorization: 'Bearer ' + getOAuthService().getAccessToken()
+  }
+  var url = 'https://api.spotify.com/v1/me/player/recently-played'
+  console.log('Fetching', headers);
+  var result = UrlFetchApp.fetch(url, { headers: headers });
+  console.log('Response', result);
+  return JSON.parse(result.getContentText());
+}
+
 function getData(request) {
   // Prepare the schema for the fields requested.
   var dataSchema = [];
@@ -89,38 +100,38 @@ function getData(request) {
   });
 
   // We'll query Spotify API here. For now let's just return two mocked records
-  var mockedData = {
-    items: [
-      {
-        track: {
-          name: "Voice of the New Generation",
-          popularity: 25,
-          artists: [
-            {
-              name: "Santa Cruz"
-            }
-          ]
-        },
-        played_at: "2018-06-08T16:16:13.185Z"
-      },
-      {
-        track: {
-          name: "Shorty Wanna Be A Thug",
-          popularity: 59,
-          artists: [
-            {
-              name: "2Pac"
-            }
-          ]
-        },
-        played_at: "2018-06-08T14:11:02Z"
-      }
-    ]
-  };
+  // var mockedData = {
+  //   items: [
+  //     {
+  //       track: {
+  //         name: "Voice of the New Generation",
+  //         popularity: 25,
+  //         artists: [
+  //           {
+  //             name: "Santa Cruz"
+  //           }
+  //         ]
+  //       },
+  //       played_at: "2018-06-08T16:16:13.185Z"
+  //     },
+  //     {
+  //       track: {
+  //         name: "Shorty Wanna Be A Thug",
+  //         popularity: 59,
+  //         artists: [
+  //           {
+  //             name: "2Pac"
+  //           }
+  //         ]
+  //       },
+  //       played_at: "2018-06-08T14:11:02Z"
+  //     }
+  //   ]
+  // };
 
   // Prepare the tabular data.
   var data = [];
-  mockedData.items.forEach(function(play) {
+  fetchPlays().items.forEach(function(play) {
     var values = [];
     var playTime = new Date(play.played_at);
     // Google expects YYMMDD format
@@ -162,7 +173,7 @@ function getData(request) {
 }
 
 function getAuthType() {
-  return { type: "NONE" };
+  return { type: "OAUTH2" };
 }
 
 function isAdminUser() {

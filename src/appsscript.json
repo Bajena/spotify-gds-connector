@@ -6,5 +6,12 @@
     "addonUrl": "https://github.com/Bajena/spotify-gds-connector",
     "supportUrl": "https://github.com/Bajena/spotify-gds-connector",
     "description": "This connector can be used to show stats about your last played tracks"
+  },
+  "dependencies": {
+    "libraries": [{
+      "userSymbol": "OAuth2",
+      "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
+      "version": "26"
+    }]
   }
 }
