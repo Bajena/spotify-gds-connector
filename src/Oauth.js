@@ -7,7 +7,8 @@ oauth.OAUTH_CLIENT_ID = 'OAUTH_CLIENT_ID';
 oauth.OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';
 
 /**
- * This builds an OAuth2 service for connecting to Meetup.com.
+ * This builds an OAuth2 service for connecting to Spotify
+ * More info here: https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorizaton-code-flow
  *
  * @return {OAuth2Service}
  */
@@ -19,7 +20,7 @@ function getOAuthService() {
   var clientSecret = scriptProps.getProperty(oauth.OAUTH_CLIENT_SECRET);
   return OAuth2.createService('spotify')
     .setAuthorizationBaseUrl('https://accounts.spotify.com/authorize')
-    .setTokenUrl('https://accounts.spotify.com/api/token') // refresh token URL
+    .setTokenUrl('https://accounts.spotify.com/api/token')
     .setClientId(clientId)
     .setClientSecret(clientSecret)
     .setPropertyStore(PropertiesService.getUserProperties())

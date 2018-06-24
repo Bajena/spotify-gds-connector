@@ -79,11 +79,46 @@ function fetchPlays(startDate, endDate) {
   var headers = {
     Authorization: 'Bearer ' + getOAuthService().getAccessToken()
   }
-  var url = 'https://api.spotify.com/v1/me/player/recently-played'
-  console.log('Fetching', headers);
-  var result = UrlFetchApp.fetch(url, { headers: headers });
-  console.log('Response', result);
-  return JSON.parse(result.getContentText());
+  var start = new Date(startDate).getTime();
+  var end = new Date(endDate).getTime();
+
+  var url = 'https://api.spotify.com/v1/me/player/recently-played?before='+end;
+
+  var data = [];
+  var fetchNext = true;
+
+  do {
+    console.log('Fetching', url, headers);
+    var result = UrlFetchApp.fetch(url, { headers: headers });
+    console.log('Response', result);
+    parsedResult = JSON.parse(result.getContentText());
+
+    for (var i = 0; i < parsedResult.items.length; i++) {
+      var v = parsedResult.items[i];
+      var playedAt = new Date(v.played_at).getTime();
+      if (playedAt < start) {
+        console.log("Item not eligible. ", v);
+        fetchNext = false;
+      } else {
+        data.push(v);
+      }
+    }
+
+    if (!fetchNext) {
+      console.log("Ending");
+      break;
+    }
+
+    url = parsedResult.next;
+
+    if (!url) {
+      console.log("No 'next' key. Done!");
+      break;
+    }
+  } while (fetchNext);
+
+  console.log('Data:', data.length);
+  return data;
 }
 
 function getData(request) {
@@ -131,7 +166,9 @@ function getData(request) {
 
   // Prepare the tabular data.
   var data = [];
-  fetchPlays().items.forEach(function(play) {
+  var startDate = request.dateRange.startDate;
+  var endDate = request.dateRange.endDate;
+  fetchPlays(startDate, endDate).forEach(function(play) {
     var values = [];
     var playTime = new Date(play.played_at);
     // Google expects YYMMDD format
