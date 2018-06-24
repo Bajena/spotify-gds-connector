@@ -122,6 +122,16 @@ function fetchPlays(startDate, endDate) {
 }
 
 function getData(request) {
+  var dataSchema = prepareSchema(request);
+
+  var startDate = request.dateRange.startDate;
+  var endDate = request.dateRange.endDate;
+  var plays = fetchPlays(startDate, endDate);
+
+  return buildTabularData(plays, dataSchema);
+}
+
+function prepareSchema(request) {
   // Prepare the schema for the fields requested.
   var dataSchema = [];
   var fixedSchema = getSchema().schema;
@@ -134,79 +144,51 @@ function getData(request) {
     }
   });
 
-  // We'll query Spotify API here. For now let's just return two mocked records
-  // var mockedData = {
-  //   items: [
-  //     {
-  //       track: {
-  //         name: "Voice of the New Generation",
-  //         popularity: 25,
-  //         artists: [
-  //           {
-  //             name: "Santa Cruz"
-  //           }
-  //         ]
-  //       },
-  //       played_at: "2018-06-08T16:16:13.185Z"
-  //     },
-  //     {
-  //       track: {
-  //         name: "Shorty Wanna Be A Thug",
-  //         popularity: 59,
-  //         artists: [
-  //           {
-  //             name: "2Pac"
-  //           }
-  //         ]
-  //       },
-  //       played_at: "2018-06-08T14:11:02Z"
-  //     }
-  //   ]
-  // };
+  return dataSchema;
+}
 
-  // Prepare the tabular data.
+function buildTabularData(plays, dataSchema) {
   var data = [];
-  var startDate = request.dateRange.startDate;
-  var endDate = request.dateRange.endDate;
-  fetchPlays(startDate, endDate).forEach(function(play) {
-    var values = [];
-    var playTime = new Date(play.played_at);
-    // Google expects YYMMDD format
-    var playedAtDate = playTime.toISOString().slice(0, 10).replace(/-/g, "");
-    // Provide values in the order defined by the schema.
-    dataSchema.forEach(function(field) {
-      switch (field.name) {
-      case 'track_name':
-        values.push(play.track.name);
-        break;
-      case 'artist':
-        values.push(play.track.artists[0].name);
-        break;
-      case 'played_at_hour':
-        values.push(
-          playedAtDate +
-          (playTime.getHours() < 10 ? '0' : '') + playTime.getHours()
-        );
-        break;
-      case 'played_at_date':
-        values.push(playedAtDate);
-        break;
-      case 'popularity':
-        values.push(play.track.popularity);
-        break;
-      default:
-        values.push('');
-      }
-    });
-    data.push({
-      values: values
-    });
-  });
 
-  return {
-    schema: dataSchema,
-    rows: data
-  };
+  plays.forEach(function(play) {
+      var values = [];
+      var playTime = new Date(play.played_at);
+      // Google expects YYMMDD format
+      var playedAtDate = playTime.toISOString().slice(0, 10).replace(/-/g, "");
+      // Provide values in the order defined by the schema.
+      dataSchema.forEach(function(field) {
+        switch (field.name) {
+        case 'track_name':
+          values.push(play.track.name);
+          break;
+        case 'artist':
+          values.push(play.track.artists[0].name);
+          break;
+        case 'played_at_hour':
+          values.push(
+            playedAtDate +
+            (playTime.getHours() < 10 ? '0' : '') + playTime.getHours()
+          );
+          break;
+        case 'played_at_date':
+          values.push(playedAtDate);
+          break;
+        case 'popularity':
+          values.push(play.track.popularity);
+          break;
+        default:
+          values.push('');
+        }
+      });
+      data.push({
+        values: values
+      });
+    });
+
+    return {
+      schema: dataSchema,
+      rows: data
+    };
 }
 
 function getAuthType() {
