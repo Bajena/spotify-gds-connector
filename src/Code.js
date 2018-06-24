@@ -75,7 +75,63 @@ function getSchema() {
   };
 }
 
-function fetchPlays(startDate, endDate) {
+function getData(request) {
+  var dataSchema = prepareSchema(request);
+
+  var startDate = request.dateRange.startDate;
+  var endDate = request.dateRange.endDate;
+
+  var cache = new DataCache(CacheService.getUserCache(), startDate, endDate);
+  var plays = null;
+  plays = fetchFromCache(cache);
+  if (!plays) {
+    plays = fetchFromApi(startDate, endDate);
+    setInCache(plays, cache);
+  }
+
+  return buildTabularData(plays, dataSchema);
+}
+
+function prepareSchema(request) {
+  // Prepare the schema for the fields requested.
+  var dataSchema = [];
+  var fixedSchema = getSchema().schema;
+  request.fields.forEach(function(field) {
+    for (var i = 0; i < fixedSchema.length; i++) {
+      if (fixedSchema[i].name == field.name) {
+        dataSchema.push(fixedSchema[i]);
+        break;
+      }
+    }
+  });
+
+  return dataSchema;
+}
+
+function fetchFromCache(cache) {
+  var plays = null;
+  console.log('Trying to fetch from cache...');
+  try {
+    var playsString = cache.get();
+    plays = JSON.parse(playsString);
+    console.log('Fetched succesfully from cache', plays.length);
+  } catch (e) {
+    console.log('Error when fetching from cache:', e);
+  }
+
+  return plays;
+}
+
+function setInCache(plays, cache) {
+  console.log('Setting data to cache...');
+  try {
+    cache.set(JSON.stringify(plays));
+  } catch (e) {
+    console.log('Error when storing in cache', e);
+  }
+}
+
+function fetchFromApi(startDate, endDate) {
   var headers = {
     Authorization: 'Bearer ' + getOAuthService().getAccessToken()
   }
@@ -119,32 +175,6 @@ function fetchPlays(startDate, endDate) {
 
   console.log('Data:', data.length);
   return data;
-}
-
-function getData(request) {
-  var dataSchema = prepareSchema(request);
-
-  var startDate = request.dateRange.startDate;
-  var endDate = request.dateRange.endDate;
-  var plays = fetchPlays(startDate, endDate);
-
-  return buildTabularData(plays, dataSchema);
-}
-
-function prepareSchema(request) {
-  // Prepare the schema for the fields requested.
-  var dataSchema = [];
-  var fixedSchema = getSchema().schema;
-  request.fields.forEach(function(field) {
-    for (var i = 0; i < fixedSchema.length; i++) {
-      if (fixedSchema[i].name == field.name) {
-        dataSchema.push(fixedSchema[i]);
-        break;
-      }
-    }
-  });
-
-  return dataSchema;
 }
 
 function buildTabularData(plays, dataSchema) {
