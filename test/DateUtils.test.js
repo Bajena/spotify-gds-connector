@@ -1,4 +1,4 @@
-const DateUtils = require('../src/DateUtils.js');
+import DateUtils from '../src/DateUtils';
 
 test('getDatePart', () => {
   const date = new Date('2018-07-09');

@@ -19,5 +19,7 @@ var DateUtils = {
   }
 }
 
-var module = module || {};
-module.exports = DateUtils;
+if (typeof(exports) !== "undefined") {
+  exports['__esModule'] = true;
+  exports['default'] = DateUtils;
+}
