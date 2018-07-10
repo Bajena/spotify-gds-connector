@@ -1,3 +1,7 @@
+if (typeof(require) !== "undefined") {
+  var DateUtils = require('./DateUtils.js');
+}
+
 /**
  * Constructor for DataCache.
  * More info on caching: https://developers.google.com/apps-script/reference/cache/cache
@@ -27,7 +31,7 @@ DataCache.MAX_CACHE_SIZE = 100 * 1024;
  * @return {String} cache key
  */
 DataCache.prototype.buildCacheKey = function(startDate, endDate) {
-  return startDate + '_' + endDate;
+  return DateUtils.getDatePart(startDate) + '_' + DateUtils.getDatePart(endDate);
 };
 
 /**
@@ -84,3 +88,6 @@ DataCache.prototype.splitInChunks = function(str) {
 
   return chunks;
 };
+
+var module = module || {};
+module.exports = DataCache;
