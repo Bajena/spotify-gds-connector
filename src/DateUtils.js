@@ -14,7 +14,7 @@ var DateUtils = {
   * @return {String} Date part. E.g. '20180710'.
   */
   getDashlessDatePart: function(dateObject) {
-    return DateUtils.getDatePart(dateObject).replace(/-/g, "");
+    return DateUtils.getDatePart(dateObject).replace(/-/g, '');
   },
 
   /*
@@ -27,9 +27,10 @@ var DateUtils = {
     var hourPart = (hours < 10 ? '0' : '') + hours;
     return DateUtils.getDashlessDatePart(dateObject) + hourPart;
   }
-}
+};
 
-if (typeof(exports) !== "undefined") {
+/* global exports */
+if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = DateUtils;
 }

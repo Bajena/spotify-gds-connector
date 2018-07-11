@@ -13,29 +13,14 @@ if (typeof(require) !== 'undefined') {
  * @return {object} DataCache.
  */
 function DataCache(cacheService, startDate, endDate) {
-  this.service = cacheService;
+  this.service = cacheService.getUserCache();
   this.cacheKey = this.buildCacheKey(startDate, endDate);
 
   return this;
 }
 
-/** @const - 6 hours, Google's max */
-DataCache.REQUEST_CACHING_TIME = 21600;
-
-/** @const - 100 KB */
-DataCache.MAX_CACHE_SIZE = 100 * 1024;
-
 /**
- * Builds a cache key for given GDS request
- *
- * @return {String} cache key
- */
-DataCache.prototype.buildCacheKey = function(startDate, endDate) {
-  return DateUtils.getDatePart(startDate) + '_' + DateUtils.getDatePart(endDate);
-};
-
-/**
- * Gets stored value
+ * Gets stored value for dates passed in constructor
  *
  * @return {String} Response string
  */
@@ -64,6 +49,23 @@ DataCache.prototype.set = function(value) {
   this.storeChunks(value);
 };
 
+// private
+
+/** @const - 6 hours, Google's max */
+DataCache.REQUEST_CACHING_TIME = 21600;
+
+/** @const - 100 KB */
+DataCache.MAX_CACHE_SIZE = 100 * 1024;
+
+/**
+ * Builds a cache key for given GDS request
+ *
+ * @return {String} cache key
+ */
+DataCache.prototype.buildCacheKey = function(startDate, endDate) {
+  return DateUtils.getDatePart(startDate) + '_' + DateUtils.getDatePart(endDate);
+};
+
 DataCache.prototype.storeChunks = function(value) {
   var chunks = this.splitInChunks(value);
 
@@ -89,6 +91,7 @@ DataCache.prototype.splitInChunks = function(str) {
   return chunks;
 };
 
+/* global exports */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = DataCache;
