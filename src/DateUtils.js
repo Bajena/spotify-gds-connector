@@ -8,10 +8,20 @@ var DateUtils = {
     return dateObject.toISOString().slice(0, 10);
   },
 
+  /*
+  * Converts Date object to a String containing the date part (without dashes).
+  *
+  * @return {String} Date part. E.g. '20180710'.
+  */
   getDashlessDatePart: function(dateObject) {
     return DateUtils.getDatePart(dateObject).replace(/-/g, "");
   },
 
+  /*
+  * Converts Date object to a String containing the date part with hour (hour has zero prefix). Date part has no dashes.
+  *
+  * @return {String} Date part with hour. E.g. '2018071003'.
+  */
   getDashlessDateWithHour: function(dateObject) {
     var hours = dateObject.getHours();
     var hourPart = (hours < 10 ? '0' : '') + hours;

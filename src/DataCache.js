@@ -1,4 +1,4 @@
-if (typeof(require) !== "undefined") {
+if (typeof(require) !== 'undefined') {
   var DateUtils = require('./DateUtils.js')['default'];
 }
 
@@ -89,7 +89,7 @@ DataCache.prototype.splitInChunks = function(str) {
   return chunks;
 };
 
-if (typeof(exports) !== "undefined") {
+if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = DataCache;
 }

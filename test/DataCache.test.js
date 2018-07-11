@@ -7,4 +7,3 @@ test('initialization', () => {
 
   expect(cache.cacheKey).toBe('2018-07-09_2018-07-10');
 });
-
