@@ -23,7 +23,7 @@ var DateUtils = {
   * @return {String} Date part with hour. E.g. '2018071003'.
   */
   getDashlessDateWithHour: function(dateObject) {
-    var hours = dateObject.getHours();
+    var hours = dateObject.getUTCHours();
     var hourPart = (hours < 10 ? '0' : '') + hours;
     return DateUtils.getDashlessDatePart(dateObject) + hourPart;
   }

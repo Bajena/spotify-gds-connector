@@ -76,7 +76,7 @@ test('build', () => {
   const expected = [
     'Let It Happen',
     'Tame Impala',
-    '2016121321',
+    '2016121320',
     '20161213',
     3,
     ''
