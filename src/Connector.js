@@ -1,6 +1,6 @@
 if (typeof(require) !== 'undefined') {
   var DataBuilder = require('./DataBuilder.js')['default'];
-  var OAuth2Builder = require('./OAuth2Builder.js')['default'];
+  var Oauth2Builder = require('./Oauth2Builder.js')['default'];
   var OauthService = require('./OauthService.js')['default'];
   var SpotifyClient = require('./SpotifyClient.js')['default'];
 }
@@ -123,8 +123,8 @@ Connector.prototype.isAdminUser = function() {
 Connector.prototype.getData = function(request) {
   var dataSchema = this.prepareSchema(request);
 
-  var startDate = request.dateRange.startDate;
-  var endDate = request.dateRange.endDate;
+  var startDate = new Date(request.dateRange.startDate);
+  var endDate = new Date(request.dateRange.endDate);
   var apiKey = this.getOAuthService().getAccessToken();
   var spotifyClient = new SpotifyClient(this.services.CacheService, this.services.UrlFetchApp, apiKey);
 
@@ -203,8 +203,8 @@ Connector.prototype.buildTabularData = function(plays, dataSchema) {
   };
 };
 
-Connector.prototype.getOauthService = function() {
-  var builder = new OAuth2Builder(this.services.PropertiesService, this.services.OAuth2);
+Connector.prototype.getOAuthService = function() {
+  var builder = new Oauth2Builder(this.services.PropertiesService, this.services.OAuth2);
   return new OauthService(builder, this.services.HtmlService);
 };
 

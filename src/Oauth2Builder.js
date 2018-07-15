@@ -37,6 +37,8 @@ Oauth2Builder.prototype.build = function() {
     .setCallbackFunction('authCallback');
 };
 
+// private
+
 Oauth2Builder.prototype.getClientSecret = function() {
   var scriptProps = this.propertiesService.getScriptProperties();
   return scriptProps.getProperty(Oauth2Builder.OAUTH_CLIENT_SECRET);
@@ -44,7 +46,7 @@ Oauth2Builder.prototype.getClientSecret = function() {
 
 Oauth2Builder.prototype.getClientId = function() {
   var scriptProps = this.propertiesService.getScriptProperties();
-  return scriptProps.getProperty(Oauth2Builder.OAUTH_CLIENT_SECRET);
+  return scriptProps.getProperty(Oauth2Builder.OAUTH_CLIENT_ID);
 };
 
 /* global exports */

@@ -6,7 +6,7 @@
  *
  * @return {object} OauthService object.
  */
-function OauthService(oauth2Builder, oauth2Service, htmlService) {
+function OauthService(oauth2Builder, htmlService) {
   this.oauth2Builder = oauth2Builder;
   this.htmlService = htmlService;
 
@@ -33,6 +33,7 @@ OauthService.prototype.authCallback = function(request) {
  */
 OauthService.prototype.isAuthValid = function() {
   var service = this.getInternalService();
+
   if (service == null) {
     return false;
   }
@@ -57,8 +58,7 @@ OauthService.prototype.get3PAuthorizationUrls = function() {
  * the external OAuth2 provider.
  */
 OauthService.prototype.resetAuth = function() {
-  var service = this.getInternalService();
-  service.reset();
+  this.getInternalService().reset();
 };
 
 /**
@@ -66,7 +66,7 @@ OauthService.prototype.resetAuth = function() {
  */
 OauthService.prototype.getAccessToken = function() {
   var service = this.getInternalService();
-  service.getAccessToken();
+  return service.getAccessToken();
 };
 
 // private
