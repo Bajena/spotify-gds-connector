@@ -76,6 +76,7 @@ OauthService.prototype.getInternalService = function() {
 };
 
 /* global exports */
+/* istanbul ignore next */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = OauthService;

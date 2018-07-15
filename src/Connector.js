@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 if (typeof(require) !== 'undefined') {
   var DataBuilder = require('./DataBuilder.js')['default'];
   var Oauth2Builder = require('./Oauth2Builder.js')['default'];
@@ -209,6 +210,7 @@ Connector.prototype.getOAuthService = function() {
 };
 
 /* global exports */
+/* istanbul ignore next */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = Connector;

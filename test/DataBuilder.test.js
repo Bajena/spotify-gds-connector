@@ -18,6 +18,9 @@ beforeEach(() => {
     },
     {
       name: 'popularity'
+    },
+    {
+      name: 'unknown'
     }
   ];
 
@@ -75,7 +78,8 @@ test('build', () => {
     'Tame Impala',
     '2016121321',
     '20161213',
-    3
+    3,
+    ''
   ];
 
   expect(builder.build(play)).toEqual(expected);

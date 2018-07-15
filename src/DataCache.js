@@ -92,6 +92,7 @@ DataCache.prototype.splitInChunks = function(str) {
 };
 
 /* global exports */
+/* istanbul ignore next */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = DataCache;

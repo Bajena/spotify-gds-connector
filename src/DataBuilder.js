@@ -1,3 +1,4 @@
+/* istanbul ignore next line */
 if (typeof(require) !== 'undefined') {
   var DateUtils = require('./DateUtils.js')['default'];
 }
@@ -51,6 +52,7 @@ DataBuilder.prototype.build = function(play) {
 };
 
 /* global exports */
+/* istanbul ignore next */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = DataBuilder;

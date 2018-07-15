@@ -50,6 +50,7 @@ Oauth2Builder.prototype.getClientId = function() {
 };
 
 /* global exports */
+/* istanbul ignore next */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = Oauth2Builder;

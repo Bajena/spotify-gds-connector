@@ -1,5 +1,6 @@
 /* global CacheService, UrlFetchApp, HtmlService, PropertiesService, OAuth2 */
 
+/* istanbul ignore next */
 if (typeof(require) !== 'undefined') {
   var Connector = require('./Connector.js')['default'];
 }

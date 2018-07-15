@@ -106,6 +106,7 @@ SpotifyClient.prototype.fetchFromApi = function(startDate, endDate) {
 };
 
 /* global exports */
+/* istanbul ignore next */
 if (typeof(exports) !== 'undefined') {
   exports['__esModule'] = true;
   exports['default'] = SpotifyClient;
