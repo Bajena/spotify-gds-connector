@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 if (typeof(require) !== 'undefined') {
   var DateUtils = require('./DateUtils.js')['default'];
 }

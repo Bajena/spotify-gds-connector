@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 if (typeof(require) !== 'undefined') {
   var DataCache = require('./DataCache.js')['default'];
 }
@@ -50,7 +51,7 @@ SpotifyClient.prototype.fetchFromCache = function(cache) {
   return plays;
 };
 
-SpotifyClient.prototype.storeInCache = function(cache, plays) {
+SpotifyClient.prototype.storeInCache = function(plays, cache) {
   console.log('Setting data to cache...');
   try {
     cache.set(JSON.stringify(plays));
@@ -70,12 +71,13 @@ SpotifyClient.prototype.fetchFromApi = function(startDate, endDate) {
 
   var data = [];
   var fetchNext = true;
+  const pageSize = 20;
 
   do {
     console.log('Fetching', url, headers);
     var result = this.urlFetchApp.fetch(url, { headers: headers });
     console.log('Response', result);
-    const parsedResult = JSON.parse(result.getContentText());
+    var parsedResult = JSON.parse(result.getContentText());
 
     for (var i = 0; i < parsedResult.items.length; i++) {
       var v = parsedResult.items[i];
@@ -88,21 +90,13 @@ SpotifyClient.prototype.fetchFromApi = function(startDate, endDate) {
       }
     }
 
-    if (!fetchNext) {
-      console.log('Ending');
-      break;
-    }
-
     url = parsedResult.next;
 
-    if (!url) {
-      console.log("No 'next' key. Done!");
-      break;
+    if (parsedResult.items.length < pageSize || !fetchNext || !url) {
+      console.log('Ending');
+      return data;
     }
   } while (fetchNext);
-
-  console.log('Data:', data.length);
-  return data;
 };
 
 /* global exports */
