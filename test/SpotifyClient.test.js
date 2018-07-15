@@ -22,6 +22,7 @@ test('getRecentPlays', () => {
     'https://api.spotify.com/v1/me/player/recently-played?before=1531482414230': 1
   };
   expect(urlFetchAppMock.calls).toEqual(expectedApiCalls, 'it calls proper endpoints');
+  expect(urlFetchAppMock.passedHeaders['Authorization']).toBe('Bearer api_key');
   expect(cacheServiceMock.userCache.hits).toBe(1, 'it checks if data is cached');
 
   result = service.getRecentPlays(startDate, endDate);
