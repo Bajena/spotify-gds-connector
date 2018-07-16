@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "push": "cd src;clasp push;cd -"
+    "push": "cd src;clasp push;cd -",
+    "lint": "eslint ."
   },
   "jest": {
     "collectCoverageFrom": [
