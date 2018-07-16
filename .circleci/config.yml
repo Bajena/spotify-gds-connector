@@ -38,6 +38,11 @@ jobs:
       - run:
           name: "Lint the code"
           command: yarn lint
+
       - run:
           name: "Run tests (with coverage)"
           command: yarn coverage
+
+      - run:
+          name: "Send coverage to CodeCov"
+          command: yarn global add codecov && codecov
