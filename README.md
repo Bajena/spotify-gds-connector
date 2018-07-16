@@ -1,6 +1,6 @@
 # Custom Google Data Studio connector
 [![CircleCI](https://circleci.com/gh/Bajena/spotify-gds-connector/tree/master.svg?style=svg)](https://circleci.com/gh/Bajena/spotify-gds-connector/tree/master)
-
+[![codecov](https://codecov.io/gh/Bajena/spotify-gds-connector/branch/master/graph/badge.svg)](https://codecov.io/gh/Bajena/spotify-gds-connector)
 ## Description
 This repo contains code of a custom [Google Data Studio connector](https://developers.google.com/datastudio/connector/gallery/) for displaying stats about your recent plays in Spotify. 
 
